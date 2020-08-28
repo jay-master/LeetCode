@@ -1,5 +1,5 @@
 """
-Problem Description:
+14. Longest Common Prefix
 Write a function to find the longest common prefix string amongst an array of strings.
 If there is no common prefix, return an empty string "".
 
@@ -62,9 +62,9 @@ class Solution(object):
                 return noprefix # if the first letter is not a common letter, which means there is no prefix, return an empty string.
             else:
                 prefix = prefix.replace('A', '')
-                # print(prefix)   # 값을 return 하기 전에는 출력 . 정확한 이유는 알아볼 것.
+                # print(prefix)   # 'print()' works before return the value. (Why?)
                 return prefix   # otherwise, remove the capital 'A's, and return only the common prefix
-                # print(prefix)   # 값을 return 한 이후에는 출력 안됨. 정확한 이유는 알아볼 것.
+                # print(prefix)   # 'print()' dosen't works before return the value. (Why?)
 
 
 
@@ -72,6 +72,6 @@ strs = ["flower", "flow", "flight"]
 prefix = Solution()
 prefix.longestCommonPrefix(strs)
 
-# 실행 결과를 출력 해보고 싶을 때:
+# To print the returned value:
 # ans = prefix.longestCommonPrefix(strs)
 # print(ans)
