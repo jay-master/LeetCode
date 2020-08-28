@@ -44,32 +44,27 @@ class Solution (object):
         """
 
         # Create dictionary: pairs of parentheses
-        # Last 3 pairs are added because of the error occurred during processing 'if' below.
-        pair = {"(":")", "{":"}", "[":"]", ")":"", "}":"", "]":""}
+        pair = {"(": ")", "{": "}", "[": "]"}
 
-        i = -1
         checkpair = []  # List to check improper pair
 
-        while i <= len(s)-2:
-            i += 1
-            j = 1   # Reset for the next element
-            k = 0   # Reset for the next element
+        for key in pair:
+            if key in s:    # For every 'opening' parentheses in input 's', check if i+1, i+3, i+5, ..-th elements are their 'pair' parentheses (here i: index of 'opening' parentheses).
+                i = 1
+                j = 0   # Reset for the next element
+                while i + s.index(key) < len(s):
+                    if s[s.index(key) + i] == pair[key]:
+                        j += 1  # Increase variable 'j', if there are 'pair' of i-th element in i+1, i+3, i+5, ..-th position.
+                        i += 2
+                    else:   # Do not increase variable 'j', if there is no 'pair' of i-th element in i+1, i+3, i+5, ..-th position.
+                        i += 2
+                checkpair.append(j) # After check i-th element (and i+1, i+3, i+5, ..-th elements), put variable 'j' in the list. If 'j' is 0, i-th element has no 'pair' in proper positions.
 
-            if s[i] == "(" or s[i] == "{" or s[i] == "[":   # Check every i-th elements which are 'opening' of parentheses, if i+1, i+3, i+5, ..-th elements are their 'pair' parentheses.
-                while i + j <= len(s) - 1:
-                    if pair[s[i]] == s[i + j]:
-                        k += 1  # Increase variable k, if there are 'pair' of i-th element in i+1, i+3, i+5, ..-th position.
-                        j += 2
-
-                    else:   # Do not increase variable k, if there is no 'pair' of i-th element in i+1, i+3, i+5, ..-th position.
-                        j += 2
-                checkpair.append(k) # After check i-th element (and i+1, i+3, i+5, ..-th elements), put variable k in the list. If k is 0, i-th element have no 'pair' in proper position.
-
-        del checkpair[len(checkpair)-1] # Delete the last element of the list. Put due to an wrong result occurred, when len(s)=2 (ex: "()"). Expected result is 'True' but returns 'False', as the list 'checkpair' is [1,0].
         print(checkpair)
 
         # Many filtering conditions are written here.
-        if 0 not in checkpair and len(checkpair)!=0 and s.count('(')==s.count(')') and s.count('[')==s.count(']') and s.count('{')==s.count('}') or s == "":
+        if 0 not in checkpair and checkpair != [] and s.count('(') == s.count(')') and s.count('[') == s.count(
+                ']') and s.count('{') == s.count('}') or s == "":
             return True
         else:
             return False
